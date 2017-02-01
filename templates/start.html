@@ -10,8 +10,8 @@
 		  <th><p class="green lead text-center">Stock</p></th>
 		  <th><p class="lead text-center">Initial price</p></th>
 		  <th><p class="lead text-center">Latest price</p></th>
-		  <th><p class="lead text-center">User</p></th>
-			<th><p class="lead text-center">ID</p></th>
+			<th><p class="lead text-center">Progress (%)</p></th>
+			<th><p class="lead text-center">User</p></th>
 		  <!--<th><p class="lead text-center">Sell</th>
 			<th><p class="lead text-center">Sales price</th>-->
 		</tr>
@@ -21,8 +21,8 @@
 			  <td><p class="lead text-center">{{$stock.Stck.Name}}<p><input type="hidden" name="symbol" value={{$stock.Stck.Symbol}}></td>
 			  <td><p class="lead text-center"> {{$stock.Stck.BuyPrice}}</p><input type="hidden" name="buyprice" value={{$stock.Stck.BuyPrice}}></td>
 			  <td><p class="lead text-center">{{$stock.Stck.LastTradePriceOnly}}</p><input type="hidden" name="lastprice" value={{$stock.Stck.LastTradePriceOnly}}></td>
+				<td><p class="lead text-center">{{$stock.Stck.Change}}<p><input type="hidden" name="user" value={{$stock.Stck.Change}}></td>
 				<td><p class="lead text-center">{{$stock.Usr.Name}}<p><input type="hidden" name="user" value={{$stock.Usr.Name}}></td>
-				<td><p class="lead text-center">{{$stock.URL}}<p><input type="hidden" name="user" value={{$stock.URL}}></td>
 				<!--
 				<td><button class="btn btn-default" type="submit">Sell</button></td>
 				<td><input type="text" class="form-control" id="salesprice" name="salesprice" placeholder="Sales price"></td-->
