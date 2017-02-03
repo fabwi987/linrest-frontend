@@ -56,16 +56,74 @@ func main() {
 	router.Static("/static", "static")
 	router.StaticFile("/favicon.ico", "./resources/favicon.ico")
 
-	router.GET("/start", startFunc)
+	router.GET("/start", allRecs)
+	router.GET("/users/:id", userRecs)
+	router.GET("/meet/:id", meetRecs)
 
 	router.Run(":" + port)
 
 }
 
 //ginFunc returns a gin context
-func startFunc(c *gin.Context) {
+func allRecs(c *gin.Context) {
 
 	request := "http://localhost:8080/recommendations"
+	resp, err := http.Get(request)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	defer resp.Body.Close()
+	var recs []*Recommendation
+
+	if err := json.NewDecoder(resp.Body).Decode(&recs); err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	layoutData := struct {
+		ThreadID int
+		Posts    []*Recommendation
+	}{
+		ThreadID: 1,
+		Posts:    recs,
+	}
+
+	c.HTML(http.StatusOK, "start.html", layoutData)
+
+}
+
+func userRecs(c *gin.Context) {
+
+	symbol := c.Param("id")
+	request := "http://localhost:8080/recommendations/user/" + symbol
+	resp, err := http.Get(request)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	defer resp.Body.Close()
+	var recs []*Recommendation
+
+	if err := json.NewDecoder(resp.Body).Decode(&recs); err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	layoutData := struct {
+		ThreadID int
+		Posts    []*Recommendation
+	}{
+		ThreadID: 1,
+		Posts:    recs,
+	}
+
+	c.HTML(http.StatusOK, "start.html", layoutData)
+
+}
+
+func meetRecs(c *gin.Context) {
+
+	symbol := c.Param("id")
+	request := "http://localhost:8080/recommendations/meet/" + symbol
 	resp, err := http.Get(request)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
