@@ -42,6 +42,17 @@ type Stock struct {
 	URL                string    `json:"URL" bson:"URL"`
 }
 
+type Meet struct {
+	ID          int       `json:"ID" bson:"ID"`
+	Location    string    `json:"Location" bson:"Location"`
+	Date        time.Time `json:"Date" bson:"Date"`
+	Text        string    `json:"Text" bson:"Text"`
+	Created     time.Time `json:"Created" bson:"Created"`
+	LastUpdated time.Time `json:"LastUpdated" bson:"LastUpdated"`
+	URL         string    `json:"URL" bson:"URL"`
+	IDUser      int       `json:"IDuser" bson:"IDuser"`
+}
+
 func main() {
 
 	port := os.Getenv("PORT")
@@ -59,6 +70,7 @@ func main() {
 	router.GET("/start", allRecs)
 	router.GET("/users/:id", userRecs)
 	router.GET("/meet/:id", meetRecs)
+	router.GET("/meets", GetMeetsEndpoint)
 
 	router.Run(":" + port)
 
@@ -145,5 +157,32 @@ func meetRecs(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "start.html", layoutData)
+
+}
+
+func GetMeetsEndpoint(c *gin.Context) {
+
+	request := "http://localhost:8080/meet"
+	resp, err := http.Get(request)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	defer resp.Body.Close()
+	var meets []*Meet
+
+	if err := json.NewDecoder(resp.Body).Decode(&meets); err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	layoutData := struct {
+		ThreadID int
+		Posts    []*Meet
+	}{
+		ThreadID: 1,
+		Posts:    meets,
+	}
+
+	c.HTML(http.StatusOK, "meets.html", layoutData)
 
 }
