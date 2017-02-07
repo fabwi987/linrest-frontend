@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	{{template "header.html"}}
+<div id="active">
+	<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Meetings</div>
+	<table class="table table-striped">
+		<tr>
+		  <th><p class="green lead text-center">User</p></th>
+		  <th><p class="lead text-center">Score</p></th>
+		  <th><p class="lead text-center">Phone</p></th>
+			<!--<th><p class="lead text-center">Progress (%)</p></th>
+			<th><p class="lead text-center">User</p></th>
+		  <th><p class="lead text-center">Sell</th>
+			<th><p class="lead text-center">Sales price</th>-->
+		</tr>
+		{{range $usrs := .Posts}}
+			<!--<form action="sell" method="POST">-->
+			<tr>
+			  <td><a href={{$usrs.URL}} class="lead text-center">{{$usrs.Name}}</a></td>
+			  <td><p class="lead text-center"> {{$usrs.Score}}</p><input type="hidden" name="date" value={{$usrs.Score}}></td>
+			  <td><p class="lead text-center">{{$usrs.Phone}}</p><input type="hidden" name="text" value={{$usrs.Phone}}></td>
+
+			<!--	</form> -->
+			</tr>
+		{{end}}
+	</table>
+</div>
+</div>
+</div>
+{{template "footer.html"}}

@@ -23,6 +23,7 @@ type User struct {
 	Name        string    `json:"Name" bson:"Name"`
 	Phone       string    `json:"Phone" bson:"Phone"`
 	Mail        string    `json:"Mail" bson:"Mail"`
+	Score       int       `json:"Score" bson:"Score"`
 	Created     time.Time `json:"Created" bson:"Created"`
 	LastUpdated time.Time `json:"LastUpdated" bson:"LastUpdated"`
 	URL         string    `json:"URL" bson:"URL"`
@@ -68,7 +69,8 @@ func main() {
 	router.StaticFile("/favicon.ico", "./resources/favicon.ico")
 
 	router.GET("/start", allRecs)
-	router.GET("/users/:id", userRecs)
+	router.GET("/users/singele/:id", userRecs)
+	router.GET("/users/leaderboard", GetLeaderboardEndpoint)
 	router.GET("/meet/:id", meetRecs)
 	router.GET("/meets", GetMeetsEndpoint)
 
@@ -184,5 +186,32 @@ func GetMeetsEndpoint(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "meets.html", layoutData)
+
+}
+
+func GetLeaderboardEndpoint(c *gin.Context) {
+
+	request := "http://localhost:8080/users/leaderboard"
+	resp, err := http.Get(request)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	defer resp.Body.Close()
+	var users []*User
+
+	if err := json.NewDecoder(resp.Body).Decode(&users); err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	layoutData := struct {
+		ThreadID int
+		Posts    []*User
+	}{
+		ThreadID: 1,
+		Posts:    users,
+	}
+
+	c.HTML(http.StatusOK, "leaderboard.html", layoutData)
 
 }
