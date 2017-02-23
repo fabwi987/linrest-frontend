@@ -4,7 +4,7 @@
 <div id="active">
 	<div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Meetings</div>
+  <div class="panel-heading">Leaderboard</div>
 	<table class="table table-striped">
 		<tr>
 		  <th><p class="green lead text-center">User</p></th>
@@ -18,7 +18,7 @@
 		{{range $usrs := .Posts}}
 			<!--<form action="sell" method="POST">-->
 			<tr>
-			  <td><a href={{$usrs.URL}} class="lead text-center">{{$usrs.Name}}</a></td>
+			  <td><a href=/users/single/{{$usrs.ID}} class="lead text-center">{{$usrs.Name}}</a></td>
 			  <td><p class="lead text-center"> {{$usrs.Score}}</p><input type="hidden" name="date" value={{$usrs.Score}}></td>
 			  <td><p class="lead text-center">{{$usrs.Phone}}</p><input type="hidden" name="text" value={{$usrs.Phone}}></td>
 

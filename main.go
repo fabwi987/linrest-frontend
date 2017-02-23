@@ -13,6 +13,7 @@ type Recommendation struct {
 	ID          int       `json:"ID" bson:"ID"`
 	Usr         *User     `json:"User" bson:"User"`
 	Stck        *Stock    `json:"Stock" bson:"Stock"`
+	Mt          *Meet     `json:"Meet" bson:"Meet"`
 	Created     time.Time `json:"Created" bson:"Created"`
 	LastUpdated time.Time `json:"LastUpdated" bson:"LastUpdated"`
 	URL         string    `json:"URL" bson:"URL"`
@@ -131,7 +132,7 @@ func userRecs(c *gin.Context) {
 		Posts:    recs,
 	}
 
-	c.HTML(http.StatusOK, "start.html", layoutData)
+	c.HTML(http.StatusOK, "userrec.html", layoutData)
 
 }
 
@@ -159,7 +160,7 @@ func meetRecs(c *gin.Context) {
 		Posts:    recs,
 	}
 
-	c.HTML(http.StatusOK, "start.html", layoutData)
+	c.HTML(http.StatusOK, "meetrec.html", layoutData)
 
 }
 

@@ -4,13 +4,13 @@
 <div id="active">
 	<div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Current standings</div>
+  <div class="panel-heading">Recommendations from user</div>
 	<table class="table table-striped">
 		<tr>
 		  <th><p class="green lead text-center">Stock</p></th>
 		  <th><p class="lead text-center">Initial price</p></th>
 		  <th><p class="lead text-center">Latest price</p></th>
-			<th><p class="lead text-center">Progress (%)</p></th>
+			<th><p class="lead text-center">Date</p></th>
 			<th><p class="lead text-center">User</p></th>
 		  <!--<th><p class="lead text-center">Sell</th>
 			<th><p class="lead text-center">Sales price</th>-->
@@ -21,8 +21,9 @@
 			  <td><p class="lead text-center">{{$stock.Stck.Name}}<p><input type="hidden" name="symbol" value={{$stock.Stck.Symbol}}></td>
 			  <td><p class="lead text-center"> {{$stock.Stck.BuyPrice}}</p><input type="hidden" name="buyprice" value={{$stock.Stck.BuyPrice}}></td>
 			  <td><p class="lead text-center">{{$stock.Stck.LastTradePriceOnly}}</p><input type="hidden" name="lastprice" value={{$stock.Stck.LastTradePriceOnly}}></td>
-				<td{{if eq $stock.Stck.Color "green"}} class="bg-success"{{else}} class="bg-danger"{{end}}><p class="lead text-center">{{$stock.Stck.Change}}<p><input type="hidden" name="change" value={{$stock.Stck.Change}}></td>
-			  <!--	<td><p class="lead text-center">{{$stock.Stck.Change}}<p><input type="hidden" name="change" value={{$stock.Stck.Change}}></td>-->
+				<td><p class="lead text-center">{{$stock.Stck.Created}}</p><input type="hidden" name="lastprice" value={{$stock.Stck.Created}}></td>
+				<!--<td{{if eq $stock.Stck.Color "green"}} class="bg-success"{{else}} class="bg-danger"{{end}}><p class="lead text-center">{{$stock.Stck.Change}}<p><input type="hidden" name="change" value={{$stock.Stck.Change}}></td>
+			  	<td><p class="lead text-center">{{$stock.Stck.Change}}<p><input type="hidden" name="change" value={{$stock.Stck.Change}}></td>-->
 				<td><a href=/users/single/{{$stock.Usr.ID}} class="lead text-center">{{$stock.Usr.Name}}</a></td>
 				<!--
 				<td><button class="btn btn-default" type="submit">Sell</button></td>
